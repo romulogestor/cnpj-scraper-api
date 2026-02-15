@@ -43,7 +43,14 @@ class CNPJScraper:
             print(response.text[:500])
             print("=" * 80)
             
-            urls = re.findall(r'https?://cnpj\.biz/(\d{14})', response.text)
+            # Tentar múltiplos padrões
+            urls = re.findall(r'cnpj\.biz/(\d{14})', response.text)
+            if not urls:
+                # Tentar com URL completa
+                urls = re.findall(r'https?://cnpj\.biz/(\d{14})', response.text)
+            if not urls:
+                # Tentar sem protocolo
+                urls = re.findall(r'//cnpj\.biz/(\d{14})', response.text)
             urls_unicas = list(set(urls))
             
             print(f"📊 CNPJs encontrados: {len(urls_unicas)}")
@@ -201,4 +208,5 @@ def debug_google():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
 
