@@ -21,7 +21,6 @@ class CNPJScraper:
             'User-Agent': self.ua.random,
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Accept-Encoding': 'gzip, deflate, br',
             'Connection': 'keep-alive',
         }
         if referer:
@@ -202,3 +201,4 @@ def debug_google():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
