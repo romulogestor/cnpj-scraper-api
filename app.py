@@ -133,6 +133,10 @@ def scrape():
         
         scraper = CNPJScraper(delay=delay)
         
+        # DEBUG: capturar query e URL
+        query = f'"Bairro: {bairro}" "{cnae}" site:cnpj.biz'
+        url_busca = f'https://www.google.com/search?q={quote_plus(query)}&num={max_results}'
+        
         cnpjs = scraper.buscar_google(bairro, cnae, max_results)
         
         if not cnpjs:
@@ -140,7 +144,13 @@ def scrape():
                 'success': True,
                 'total': 0,
                 'data': [],
-                'message': 'Nenhum CNPJ encontrado'
+                'message': 'Nenhum CNPJ encontrado',
+                'debug': {
+                    'query': query,
+                    'url': url_busca,
+                    'bairro_recebido': bairro,
+                    'cnae_recebido': cnae
+                }
             })
         
         resultados = []
@@ -153,7 +163,12 @@ def scrape():
         return jsonify({
             'success': True,
             'total': len(resultados),
-            'data': resultados
+            'data': resultados,
+            'debug': {
+                'query': query,
+                'url': url_busca,
+                'cnpjs_encontrados': len(cnpjs)
+            }
         })
         
     except Exception as e:
@@ -161,6 +176,7 @@ def scrape():
             'success': False,
             'error': str(e)
         }), 500
-
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
