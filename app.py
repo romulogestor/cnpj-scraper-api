@@ -198,7 +198,7 @@ def debug_google():
         
         return jsonify({
             'status_code': response.status_code,
-            'html_preview': response.text[:2000],  # Primeiros 2000 caracteres
+            'html_preview': response.text[:15000],  # Primeiros 15000 caracteres
             'html_length': len(response.text),
             'contém_captcha': 'captcha' in response.text.lower(),
             'contém_cnpj_biz': 'cnpj.biz' in response.text
@@ -208,5 +208,6 @@ def debug_google():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
 
 
